@@ -1,0 +1,74 @@
+#include<iostream>
+using namespace std;
+#define max 1000
+int arr[max][max]={{0}};
+int front=-1,rear=-1,top=-1;
+bool visited[max];
+void enq(int a[],int b)
+{
+	
+	if(rear>=max-1){
+	   cout<<"Queue is full"<<endl;
+	   return;
+   }
+	 else
+	   {
+	    front=0;
+	    rear++;
+	    a[rear]=b;
+	    
+	   }
+   }
+ void deq(int a[])
+{
+	 if(front>rear){
+	  cout<<"Queue is empty"<<endl;
+	  return;
+       }
+     else
+     {
+		front++;
+		}
+}
+int bfs(int u,int v,int n)
+{
+	int distance[n]={0};
+	for(int j=1;j<=n;j++){
+	    visited[j]=false;}
+	
+	int que[100]={0};
+	visited[v]=true;
+	enq(que,v);
+	distance[v]=0;
+	while(front<=rear)
+	{
+		v=que[front];
+		deq(que);
+		for(int i=1;i<=n;i++)
+		{
+			if(arr[v][i]==1 && visited[i]==false){
+				distance[i]=distance[v]+1;
+				rear++;
+				que[rear]=i;
+				visited[i]=true;
+				
+			}
+		}}
+		return distance[u];
+	}
+	int main()
+{
+	int n,e;
+	cout<<"Enter the number of nodes and edges\n";
+	cin>>n>>e;
+	int a,b;
+		
+	cout<<"Enter the nodes which are connected\n";
+	for(int i=0;i<e;i++)
+	{
+		cin>>a>>b;
+		arr[a][b]=arr[b][a]=1;
+	}
+	int nn=bfs(3,1,n);
+	cout<<nn;
+	}
